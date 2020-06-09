@@ -46,6 +46,25 @@ class TaskController extends AbstractController
         // On crée notre formulaire
         $form = $this->createForm(TaskType::class, $task, array());
 
+        // On récupère notre formulaire
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() and $form->isValid()) {
+            $task->setName($form['name']->getData())
+                ->setDescription($form['description']->getData())
+                ->setDueAt($form['dueAt']->getData())
+                ->setTag($form['tag']->getData());
+
+            // On va chercher notre manager
+            $manager = $this->getDoctrine()->getManager();
+            // On fait persister notre task
+            $manager->persist($task);
+            // On flush le tout en BDD
+            $manager->flush();
+
+            return $this->redirectToRoute('tasks_listing');
+        }
+
         return $this->render('task/create.html.twig', ['form' => $form->createView()]);
     }
 }
