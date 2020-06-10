@@ -95,13 +95,11 @@ class TaskController extends AbstractController
     /**
      * @Route("tasks/delete/{id}", name="task_delete", requirements={"id"="\d+"})
      *
-     * @param [type] $id
+     * @param Task $task
      * @return Response
      */
-    public function deleteTask($id): Response
+    public function deleteTask(Task $task): Response
     {
-        $task = $this->repository->findOneById($id);
-
         $this->manager->remove($task);
         $this->manager->flush();
 
