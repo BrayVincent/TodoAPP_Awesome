@@ -2,16 +2,30 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\Tag;
 use App\Entity\Task;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Faker\Factory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    /**
+     * @var UserPasswordEncoderInterface
+     */
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     public function load(ObjectManager $manager)
     {
+
+
         // Création d'un nouvel objet Faker
         $faker = Factory::create('fr_FR');
 
@@ -49,6 +63,29 @@ class AppFixtures extends Fixture
 
             // On fait persister les données
             $manager->persist($task);
+        }
+
+        // Création de 5 utilisateurs
+        for ($u = 0; $u < 5; $u++) {
+
+            // Création d'un nouvel objet User
+            $user = new User;
+
+            // Hashage de notre mot de passe avec les paramètres de sécurité de notre $user
+            // dans /config/packages/security.yaml
+            $hash = $this->encoder->encodePassword($user, "password");
+
+            // On nourrit l'objet User
+            $user->setEmail($faker->safeEmail())
+                ->setPassword($hash);
+
+            // Si premier utilisateur crée on lui donne le rôle admin
+            if ($u === 0) {
+                $user->setRoles(["ROLE_ADMIN"]);
+            }
+
+            // On fait persister les données
+            $manager->persist($user);
         }
 
         // On push le tout en BDD
