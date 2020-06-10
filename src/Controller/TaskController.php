@@ -91,4 +91,20 @@ class TaskController extends AbstractController
 
         return $this->render('task/create.html.twig', ['task' => $task, 'form' => $form->createView()]);
     }
+
+    /**
+     * @Route("tasks/delete/{id}", name="task_delete", requirements={"id"="\d+"})
+     *
+     * @param [type] $id
+     * @return Response
+     */
+    public function deleteTask($id): Response
+    {
+        $task = $this->repository->findOneById($id);
+
+        $this->manager->remove($task);
+        $this->manager->flush();
+
+        return $this->redirectToRoute('tasks_listing');
+    }
 }
