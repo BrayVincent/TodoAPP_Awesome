@@ -91,6 +91,18 @@ class TaskController extends AbstractController
             // On flush le tout en BDD
             $this->manager->flush();
 
+            if ($flag) {
+                $this->addFlash(
+                    'notice',
+                    'Votre tâche a bien été ajoutée'
+                );
+            } else {
+                $this->addFlash(
+                    'notice',
+                    'Vos modifications ont bien été enregistrées!'
+                );
+            }
+
             return $this->redirectToRoute('tasks_listing');
         }
 
@@ -107,6 +119,11 @@ class TaskController extends AbstractController
     {
         $this->manager->remove($task);
         $this->manager->flush();
+
+        $this->addFlash(
+            'notice',
+            'Votre tâche a été supprimée!'
+        );
 
         return $this->redirectToRoute('tasks_listing');
     }

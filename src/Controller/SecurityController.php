@@ -16,6 +16,12 @@ class SecurityController extends AbstractController
     {
         // Si l'utilisateur est déjà connecté, le rediriger vers la page de listing
         if ($this->getUser()) {
+
+            $this->addFlash(
+                'notice',
+                'Vous êtes déjà connecté(e)!'
+            );
+
             return $this->redirectToRoute('tasks_listing');
         }
 
@@ -23,6 +29,11 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
+
+        $this->addFlash(
+            'notice',
+            'Vous êtes deconnecté(e)!'
+        );
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
