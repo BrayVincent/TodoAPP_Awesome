@@ -127,4 +127,16 @@ class TaskController extends AbstractController
 
         return $this->redirectToRoute('tasks_listing');
     }
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function home()
+    {
+        //si on est connecté, le lien home renvoie sur la liste des taches, sinon sur l'écran
+        if ($this->getUser()) {
+            return $this->redirectToRoute('tasks_listing');
+        }
+        return $this->render('home.html.twig');
+    }
 }

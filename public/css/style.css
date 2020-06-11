@@ -1,0 +1,12 @@
+body {
+  padding-top: 70px;
+}
+
+#slogan {
+  margin-top: 5px;
+  font-size: 50px;
+}
+#facing {
+  border-radius: 10px;
+  box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.5);
+}
