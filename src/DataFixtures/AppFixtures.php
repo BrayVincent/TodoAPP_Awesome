@@ -55,11 +55,13 @@ class AppFixtures extends Fixture
             $task = new Task;
 
             // On nourrit l'objet Task
+            $startDate = $faker->dateTimeBetween('-2 days', '+ 2 days');
             $task->setName($faker->sentence(6))
                 ->setDescription($faker->paragraph(3))
                 ->setCreatedAt(new \DateTime()) // Attention les dates sont crées en fonction du réglage serveur
-                ->setDueAt($faker->dateTimeBetween('now', '+ 10 days')) // de même ici
-                ->setTag($faker->randomElement($allTags));
+                ->setDueAt($faker->dateTimeBetween($startDate, '+ 10 days')) // de même ici
+                ->setTag($faker->randomElement($allTags))
+                ->setStartAt($startDate);
 
             // On fait persister les données
             $manager->persist($task);

@@ -55,6 +55,11 @@ class Task
      */
     private $tag;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $startAt;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -116,6 +121,18 @@ class Task
     public function setTag(?Tag $tag): self
     {
         $this->tag = $tag;
+
+        return $this;
+    }
+
+    public function getStartAt(): ?\DateTimeInterface
+    {
+        return $this->startAt;
+    }
+
+    public function setStartAt(?\DateTimeInterface $startAt): self
+    {
+        $this->startAt = $startAt;
 
         return $this;
     }
