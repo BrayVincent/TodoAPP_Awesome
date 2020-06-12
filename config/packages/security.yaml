@@ -39,5 +39,6 @@ security:
     - { path: ^/tasks, roles: ROLE_USER }
     - { path: ^/calendar, roles: ROLE_USER }
     - { path: ^/contact, roles: ROLE_USER }
+    - { path: ^/tags, roles: ROLE_ADMIN }
     # - { path: ^/admin, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }
