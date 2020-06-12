@@ -38,5 +38,6 @@ security:
   access_control:
     - { path: ^/tasks, roles: ROLE_USER }
     - { path: ^/calendar, roles: ROLE_USER }
+    - { path: ^/contact, roles: ROLE_USER }
     # - { path: ^/admin, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }

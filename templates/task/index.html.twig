@@ -19,6 +19,7 @@
 				<th>Catégorie</th>
 				<th></th>
 				<th></th>
+				<th></th>
 			</thead>
 			<tbody>
 				{% if tasks is defined %}
@@ -28,6 +29,9 @@
 							<td>{{ task.name }}</td>
 							<td>{{ task.dueAt | date('d/m/Y H:i') }}</td>
 							<td>{{ task.tag.name }}</td>
+							<td>
+								<a href="{{ path('task_mail' , {'id' : task.id })}}" class="btn btn-outline-primary">Send</a>
+							</td>
 							<td>
 								<a href="{{ path('task_update', {'id': task.id })}}" class="btn btn-success">Update</a>
 							</td>
