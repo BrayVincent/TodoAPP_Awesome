@@ -4,7 +4,7 @@
 {% block stylesheets %}
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/
-						dt/dt-1.10.21/datatables.min.css"/>
+							dt/dt-1.10.21/datatables.min.css"/>
 {% endblock %}
 {% block body %}
 	<div class="container mt-5">
@@ -14,6 +14,7 @@
 				<th>Nom</th>
 				<th>Tag</th>
 				<th>Description</th>
+				<th>Date de début</th>
 				<th>Date Effective</th>
 			</thead>
 			<tbody>
@@ -23,6 +24,7 @@
 						<td>{{ task.name }}</td>
 						<td>{{ task.tag.name }}</td>
 						<td>{{ task.description}}</td>
+						<td>{{ task.startAt | date('d/m/Y H:i') }}</td>
 						<td>{{ task.dueAt | date('d/m/Y H:i') }}</td>
 					</tr>
 				{% endif %}

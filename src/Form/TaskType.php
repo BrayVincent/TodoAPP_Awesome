@@ -27,6 +27,10 @@ class TaskType extends AbstractType
                 'class' => 'form-control',
                 'title' => 'Description',
             )))
+            ->add('startAt', DateTimeType::class, array('widget' => 'single_text', 'label' => "Date de début", 'attr' => array(
+                'class' => 'form-control',
+                'title' => "Date de début"
+            )))
             ->add('dueAt', DateTimeType::class, array('widget' => 'single_text', 'label' => 'Date effective', 'attr' => array(
                 'class' => 'form-control',
                 'title' => 'Date effective',

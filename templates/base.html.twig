@@ -22,6 +22,14 @@
 							<a class="nav-link" href="{{ path('home') }}">Home
 							</a>
 						</li>
+						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+							<li class="nav-item active">
+								<a class="nav-link" href="{{ path('calendar') }}">Calendar
+									<span class="sr-only">(current)</span>
+								</a>
+							</li>
+						{% endif %}
+
 					</ul>
 					<ul
 						class="navbar-nav ml-auto">
@@ -35,6 +43,7 @@
 							<li class="nav-item ml-3">
 								<a class="nav-link" href="{{ path('app_logout') }}">Log Out</a>
 							</li>
+
 							{# Sinon #}
 						{% else %}
 							{# On affiche #}

@@ -15,6 +15,7 @@
 			<thead>
 				<th>Id</th>
 				<th>Nom</th>
+				<th>Date de début</th>
 				<th>Date Effective</th>
 				<th>Catégorie</th>
 				<th></th>
@@ -27,6 +28,7 @@
 						<tr>
 							<th scope="row">{{ task.id }}</th>
 							<td>{{ task.name }}</td>
+							<td>{{ task.startAt | date('d/m/Y H:i') }}</td>
 							<td>{{ task.dueAt | date('d/m/Y H:i') }}</td>
 							<td>{{ task.tag.name }}</td>
 							<td>
