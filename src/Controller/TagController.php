@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TagController extends AbstractController
 {
@@ -25,15 +26,22 @@ class TagController extends AbstractController
     private $manager;
 
     /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
      * Constructeur du TagController pour injection de dépendances 
      * 
      * @param TagRepository $repository
      * @param EntityManagerInterface $manager
+     * @param TranslatorInterface $translator
      */
-    public function __construct(TagRepository $repository, EntityManagerInterface $manager)
+    public function __construct(TagRepository $repository, EntityManagerInterface $manager, TranslatorInterface $translator)
     {
         $this->repository = $repository;
         $this->manager = $manager;
+        $this->manager = $translator;
     }
 
     /**
@@ -85,7 +93,7 @@ class TagController extends AbstractController
                 //Si il existe, afficher un message
                 $this->addFlash(
                     'danger',
-                    'Le nom est déjà utilisé'
+                    $this->translator->trans('tag.alert.alreadyexist')
                 );
 
                 //On retourne sur le formulaire de création
@@ -106,13 +114,13 @@ class TagController extends AbstractController
                     //Message si création
                     $this->addFlash(
                         'success',
-                        'Votre catégorie à bien été ajoutée'
+                        $this->translator->trans('tag.success.add')
                     );
                 } else {
                     //Message si modification
                     $this->addFlash(
                         'success',
-                        'Votre carégorie a été modifiée'
+                        $this->translator->trans('tag.success.add')
                     );
                 }
                 return $this->redirectToRoute('tags_listing');
@@ -136,7 +144,7 @@ class TagController extends AbstractController
         if ($taskRepository->findBy(['tag' => $tag])) {
 
             //Si il existe, on affiche un message
-            $this->addFlash('danger', 'Le tag est utilisé');
+            $this->addFlash('danger', $this->translator->trans('tag.alert.busy'));
 
             //Si le tag n'est pas utilisé
         } else {
@@ -149,7 +157,7 @@ class TagController extends AbstractController
             //On affiche un message
             $this->addFlash(
                 'success',
-                'Vos modification ont bien été enregistrées'
+                $this->translator->trans('general.success.update')
             );
         }
 

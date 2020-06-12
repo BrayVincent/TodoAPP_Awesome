@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des tâches
+{% block title %}
+	{{ 'general.title.index.task' | trans }}
 {% endblock %}
 
 {% block stylesheets %}
@@ -10,14 +11,14 @@
 {% block body %}
 	<p>{{ 'listing.message' | trans }}</p>
 	<div class="container mt-5">
-		<a href="{{ path('task_create') }}" class="btn btn-primary">Ajouter</a>
+		<a href="{{ path('task_create') }}" class="btn btn-primary">{{ 'general.btn.add' | trans }}</a>
 		<table class="table table-striped tabled-bordered" id="tasksTable">
 			<thead>
-				<th>Id</th>
-				<th>Nom</th>
-				<th>Date de début</th>
-				<th>Date Effective</th>
-				<th>Catégorie</th>
+				<th>{{ 'general.form.id' | trans }}</th>
+				<th>{{ 'general.form.name' | trans }}</th>
+				<th>{{ 'general.form.startAt' | trans }}</th>
+				<th>{{ 'general.form.dueAt' | trans }}</th>
+				<th>{{ 'general.form.tag' | trans }}</th>
 				<th></th>
 				<th></th>
 				<th></th>
@@ -32,13 +33,13 @@
 							<td>{{ task.dueAt | date('d/m/Y H:i') }}</td>
 							<td>{{ task.tag.name }}</td>
 							<td>
-								<a href="{{ path('task_mail' , {'id' : task.id })}}" class="btn btn-outline-primary">Send</a>
+								<a href="{{ path('task_mail' , {'id' : task.id })}}" class="btn btn-outline-primary">{{ 'general.btn.send' | trans }}</a>
 							</td>
 							<td>
-								<a href="{{ path('task_update', {'id': task.id })}}" class="btn btn-success">Update</a>
+								<a href="{{ path('task_update', {'id': task.id })}}" class="btn btn-success">{{ 'general.btn.update' | trans }}</a>
 							</td>
 							<td>
-								<a href="{{ path('task_delete', {'id': task.id })}}" class="btn btn-danger">Delete</a>
+								<a href="{{ path('task_delete', {'id': task.id })}}" class="btn btn-danger">{{ 'general.btn.delete' | trans }}</a>
 							</td>
 						</tr>
 					{% endfor %}

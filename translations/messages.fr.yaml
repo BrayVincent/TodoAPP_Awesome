@@ -1,12 +1,12 @@
 messaccueil: Il est temps d'y aller gaiement !
 connexion:
-  phrase: 'Vous etes connecté en tant que :'
-  btnco: 'Se connecter'
-  btndeco: 'Deconnexion'
+  phrase: "Vous etes connecté en tant que :"
+  btnco: Se connecter
+  btndeco: Deconnexion
 
 nav:
-  accueil: 'Accueil'
-  titre: 'Faites le maintenant'
+  accueil: Accueil
+  titre: Faites le maintenant
 
 listing:
   ajout: Ajouter
@@ -38,9 +38,73 @@ login:
   sign: S'il vous plait, connectez-vous
   email: Courriel
   pass: Mot de passe
-  
+
 titre:
-    home: Welcome
-    login: Log in!
-    listing: Liste de jolies tâches gentilles et simples
-    tag: Liste des tags
+  home: Welcome
+  login: Log in!
+  listing: Liste de jolies tâches gentilles et simples
+  tag: Liste des tags
+
+tag:
+  btn:
+    add: Ajouter une catégorie
+  alert:
+    alreadyexist: Le nom est déjà utilisé
+    busy: La Catégorie est utilisée
+  success:
+    add: Votre catégorie a bien été ajoutée
+    update: Votre catégorie a bien été modifiée
+  form:
+    label:
+      name: Nom de la catégorie
+general:
+  navbar:
+    home: Accueil
+    calendar: Calendrier
+    logout: Déconnexion
+    login: Connexion
+  slogan: It is time for us to buckle down !
+  btn:
+    add: Ajouter
+    update: Modifier
+    delete: Supprimer
+    send: Envoyer
+  title:
+    welcome: Bienvenue
+    brand: Do it Now
+    login: Connexion
+    index:
+      tag: Liste des Catégories
+      task: Liste des Tâches
+  form:
+    save: Enregistrer
+    id: ID
+    name: Nom
+    tag: Catégorie
+    task: Tâche
+    description: Description
+    startAt: Date de Début
+    dueAt: Date Effective
+    email: Email
+    password: Mot de passe
+  alert:
+    mail:
+      notbefound: Email inconnu
+  success:
+    update: Vos modifications ont bien été enregistrées
+  connect:
+    already: Vous êtes déjà connecté(e)
+task:
+  form:
+    label:
+      name: Nom de la tâche
+      description: Description
+      startAt: Date de début
+      dueAt: Date effective
+      tag: Catégorie
+  mail:
+    success: Votre tâche vous a bien été envoyée
+security:
+  message:
+    signin: Merci de vous enregistrer
+    login: Merci de vous connecter

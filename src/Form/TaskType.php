@@ -13,27 +13,42 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TaskType extends AbstractType
 {
+
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array('label' => 'Nom de la tâche', 'attr' => array(
+            ->add('name', TextType::class, array('label' => $this->translator->trans('task.form.label.name'), 'attr' => array(
                 'class' => 'form-control',
-                'title' => 'Nom de la tâche',
+                'title' => $this->translator->trans('task.form.label.name'),
             )))
-            ->add('description', TextareaType::class, array('label' => 'Description', 'attr' => array(
+            ->add('description', TextareaType::class, array('label' => $this->translator->trans('task.form.label.description'), 'attr' => array(
                 'class' => 'form-control',
-                'title' => 'Description',
+                'title' => $this->translator->trans('task.form.label.description'),
             )))
-            ->add('startAt', DateTimeType::class, array('widget' => 'single_text', 'label' => "Date de début", 'attr' => array(
+            ->add('startAt', DateTimeType::class, array('widget' => 'single_text', 'label' => $this->translator->trans('task.form.label.startAt'), 'attr' => array(
                 'class' => 'form-control',
-                'title' => "Date de début"
+                'title' => $this->translator->trans('task.form.label.startAt')
             )))
-            ->add('dueAt', DateTimeType::class, array('widget' => 'single_text', 'label' => 'Date effective', 'attr' => array(
+            ->add('dueAt', DateTimeType::class, array('widget' => 'single_text', 'label' => $this->translator->trans('task.form.label.dueAt'), 'attr' => array(
                 'class' => 'form-control',
-                'title' => 'Date effective',
+                'title' => $this->translator->trans('task.form.label.dueAt'),
             )))
             ->add('tag', EntityType::class, [
                 'class' => Tag::class,
@@ -41,17 +56,17 @@ class TaskType extends AbstractType
                     return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
                 },
                 'choice_label' => 'name',
-                'label' => 'Catégorie',
+                'label' => $this->translator->trans('task.form.label.tag'),
                 'attr' => array(
                     'class' => 'form-control',
-                    'title' => 'Catégorie',
+                    'title' => $this->translator->trans('task.form.label.tag'),
                 )
             ])
             ->add('save', SubmitType::class, array(
-                'label' => 'Enregistrer',
+                'label' => $this->translator->trans('general.form.save'),
                 'attr' => array(
                     'class' => 'btn btn-primary',
-                    'title' => 'Enregistrer'
+                    'title' => $this->translator->trans('general.form.save')
                 )
             ));
     }

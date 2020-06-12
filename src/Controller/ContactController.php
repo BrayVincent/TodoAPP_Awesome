@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ContactController extends AbstractController
 {
@@ -24,17 +25,26 @@ class ContactController extends AbstractController
      * @var EntityManagerInterface
      */
     private $manager;
+
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
     /**
      * Construct du TaskController, Type Hinté le repository et le manager
      *
      * @param TaskRepository $repository
      * @param EntityManagerInterface $manager
+     * @param TranslatorInterface $translator
      */
-    public function __construct(TaskRepository $repository, EntityManagerInterface $manager)
+    public function __construct(TaskRepository $repository, EntityManagerInterface $manager, TranslatorInterface $translator)
     {
         $this->repository = $repository;
         $this->manager = $manager;
+        $this->translator = $translator;
     }
+
     /**
      * @Route("/contact", name="task_mail", requirements={"id"="\d+"})
      * @param \Swift_Mailer $mailer
@@ -56,7 +66,7 @@ class ContactController extends AbstractController
         $mailer->send($message);
         $this->addFlash(
             'success',
-            'Votre tâche vous a bien été envoyée'
+            $this->translator->trans('task.mail.success')
         );
 
         return $this->redirectToRoute('tasks_listing');

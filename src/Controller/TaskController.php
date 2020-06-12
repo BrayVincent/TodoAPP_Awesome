@@ -103,12 +103,12 @@ class TaskController extends AbstractController
             if ($flag) {
                 $this->addFlash(
                     'success',
-                    'Votre tâche a bien été ajoutée'
+                    $this->translator->trans('flash.tache.ajout')
                 );
             } else {
                 $this->addFlash(
                     'success',
-                    'Vos modifications ont bien été enregistrées!'
+                    $this->translator->trans('flash.tache.modif')
                 );
             }
 
