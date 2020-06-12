@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block body %}
-
+	<p>{{ 'listing.message' | trans }}</p>
 	<div class="container mt-5">
 		<a href="{{ path('task_create') }}" class="btn btn-primary">Ajouter</a>
 		<table class="table table-striped tabled-bordered" id="tasksTable">

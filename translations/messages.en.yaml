@@ -1,0 +1,46 @@
+messaccueil: It is time for us to buckle down !
+connexion:
+  phrase: 'You are logged as :'
+  btnco: 'Log in'
+  btndeco: 'Log out'
+
+nav:
+  accueil: 'Home'
+  titre: 'DO IT NOW'
+
+listing:
+  ajout: Add
+  message: I love Symfony
+  thead:
+    id: Id
+    nom: Name
+    catego: Category
+    datedebut: Start date
+    datefin: End date
+    modifier: Updating
+    supprimer: Deleting
+  modi: Update
+  sup: Delete
+  envoi: Send
+
+tache:
+  nom: Task name
+
+flash:
+  tache:
+    ajout: Your task has been added.
+    modif: Your task has been updated.
+    del: Your task has been deleted.
+  user:
+    connec: You are logged in.
+
+login:
+  sign: Please sign in
+  email: Email
+  pass: Password
+
+titre:
+    home: Welcome
+    login: Log in!
+    listing: List of simple and sweet tasks
+    tag: Tags list

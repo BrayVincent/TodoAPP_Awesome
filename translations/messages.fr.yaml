@@ -1,0 +1,46 @@
+messaccueil: Il est temps d'y aller gaiement !
+connexion:
+  phrase: 'Vous etes connecté en tant que :'
+  btnco: 'Se connecter'
+  btndeco: 'Deconnexion'
+
+nav:
+  accueil: 'Accueil'
+  titre: 'Faites le maintenant'
+
+listing:
+  ajout: Ajouter
+  message: J'aime Symfony
+  thead:
+    id: Id
+    nom: Nom
+    catego: Categorie
+    datedebut: Date début
+    datefin: Date fin
+    modifier: Modification
+    supprimer: Suppression
+  modi: Modifier
+  sup: Supprimer
+  envoi: Envoyer
+
+tache:
+  nom: Nom de la tâche
+
+flash:
+  tache:
+    ajout: Votre tâche a bien été ajoutée.
+    modif: Votre tâche a bien été modifiée.
+    del: Votre tâche a bien été supprimée.
+  user:
+    connec: Vous êtes bien connecté.
+
+login:
+  sign: S'il vous plait, connectez-vous
+  email: Courriel
+  pass: Mot de passe
+  
+titre:
+    home: Welcome
+    login: Log in!
+    listing: Liste de jolies tâches gentilles et simples
+    tag: Liste des tags

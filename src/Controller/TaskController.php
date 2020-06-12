@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TaskController extends AbstractController
@@ -25,15 +26,23 @@ class TaskController extends AbstractController
     private $manager;
 
     /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+
+    /**
      * Constructeur du TaskController, Type Hinté le repository et le manager
      *
      * @param TaskRepository $repository
      * @param EntityManagerInterface $manager
+     * @param TranslatorInterface $translator
      */
-    public function __construct(TaskRepository $repository, EntityManagerInterface $manager)
+    public function __construct(TaskRepository $repository, EntityManagerInterface $manager, TranslatorInterface $translator)
     {
         $this->repository = $repository;
         $this->manager = $manager;
+        $this->translator = $translator;
     }
 
     /**
@@ -122,7 +131,7 @@ class TaskController extends AbstractController
 
         $this->addFlash(
             'warning',
-            'Votre tâche a été supprimée!'
+            $this->translator->trans('flash.tache.del')
         );
 
         return $this->redirectToRoute('tasks_listing');

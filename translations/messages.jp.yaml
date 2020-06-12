@@ -1,0 +1,46 @@
+messaccueil: ここから仕事をやろうー
+connexion:
+  phrase: 'ユーザー名 :'
+  btnco: 'ログイン'
+  btndeco: '名前'
+
+nav:
+  accueil: 'ホーム'
+  titre: '今すぐやれ！'
+
+listing:
+  ajout: '加える'
+  message: '効日前'
+  thead:
+    id: 'ID'
+    nom: '名前'
+    catego: 'カテゴリ'
+    datedebut: '名前'
+    datefin: '発効日'
+    modifier: '名前'
+    supprimer: '発効日'
+  modi: 名前
+  sup: 発効日
+  envoi: 除し
+
+tache:
+  nom: タスク名
+
+flash:
+  tache:
+    ajout: 前日名前
+    modif: 前名前
+    del: メッセージを削除しました。
+  user:
+    connec: カテ効日
+
+login:
+  sign: 前名前除し
+  email: ました
+  pass: セージ
+
+titre:
+    home: 名前
+    login: 前名前!
+    listing: 名前!前名前除し
+    tag: 名前前
