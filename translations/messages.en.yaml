@@ -66,9 +66,9 @@ general:
   slogan: It is time for us to buckle down !
   btn:
     add: Ajouter
-    update: Modifier
-    delete: Supprimer
-    send: Envoyer
+    update: Update
+    delete: Delete
+    send: Send
   title:
     welcome: Bienvenue
     brand: Do it Now

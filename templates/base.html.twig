@@ -52,6 +52,16 @@
 							</li>
 						{% endif %}
 					</ul>
+					{# Boutons de langue #}
+					{% set route = app.request.attributes.get('_route') %}
+					{% set lang = locales|split('|') %}
+
+					{% for locale in lang %}
+						{% if locale != app.request.locale %}
+							<a class="btn btn-info ml-1" href="{{ path(route, { _locale: locale }) }}">{{ locale }}</a>
+						{% endif %}
+					{% endfor %}
+
 				</div>
 			</nav>
 		</header>

@@ -6,7 +6,7 @@
 parameters:
   # TRANSLATION définit le tableau des langues
   locale: fr
-  app.locales: [en, fr, jp]
+  app.locales: en|fr|jp
 
 services:
   # default configuration for services in *this* file
