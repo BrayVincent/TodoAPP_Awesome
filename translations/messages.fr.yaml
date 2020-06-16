@@ -33,6 +33,10 @@ flash:
     del: Votre tâche a bien été supprimée.
   user:
     connec: Vous êtes bien connecté.
+    ajout: Utilisateur ajouté.
+    modif: Utilisateur modifié.
+    suppr: Utilisateur supprimé.
+    errReCaptcha: Erreur de reCaptcha.
 
 login:
   sign: S'il vous plait, connectez-vous
@@ -108,3 +112,9 @@ security:
   message:
     signin: Merci de vous enregistrer
     login: Merci de vous connecter
+user:
+  form:
+    email: Entrez le mail de l'utilisateur.
+    password: Saississez le mot de passe.
+    password_repeat: Confirmez le mot de passe.
+    not_match: Les mots de passe ne correspondent pas.

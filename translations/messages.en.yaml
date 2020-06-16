@@ -33,6 +33,10 @@ flash:
     del: Your task has been deleted.
   user:
     connec: You are logged in.
+    ajout: The new user has been created.
+    modif: The user has been updated.
+    suppr: The user has been deleted.
+    errReCaptcha: reCaptcha error.
 
 login:
   sign: Please sign in
@@ -108,3 +112,9 @@ security:
   message:
     signin: Merci de vous enregistrer
     login: Merci de vous connecter
+user:
+  form:
+    email: Enter the user's e-mail.
+    password: Type the password.
+    password_repeat: Password confirmation.
+    not_match: The password fields must match.

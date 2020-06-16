@@ -54,11 +54,15 @@
 					</ul>
 					{# Boutons de langue #}
 					{% set route = app.request.attributes.get('_route') %}
-					{% set lang = locales|split('|') %}
+					{% set route_params = app.request.attributes.get('_route_params') %}
+					{% set params = route_params|merge(app.request.query.all) %}
 
+					{% set lang = locales|split('|') %}
 					{% for locale in lang %}
 						{% if locale != app.request.locale %}
-							<a class="btn btn-info ml-1" href="{{ path(route, { _locale: locale }) }}">{{ locale }}</a>
+							<span class="nav-item">
+								<a class="btn btn-info ml-1" href="{{ path(route, params|merge({ _locale: locale })) }}">{{ locale }}</a>
+							</span>
 						{% endif %}
 					{% endfor %}
 

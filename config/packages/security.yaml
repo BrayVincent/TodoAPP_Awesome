@@ -36,9 +36,24 @@ security:
   # Easy way to control access for large sections of your site
   # Note: Only the *first* access control that matches will be used
   access_control:
-    - { path: ^/tasks, roles: ROLE_USER }
-    - { path: ^/calendar, roles: ROLE_USER }
-    - { path: ^/contact, roles: ROLE_USER }
-    - { path: ^/tags, roles: ROLE_ADMIN }
-    # - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/profile, roles: ROLE_USER }
+    - { path: ^/fr/tasks, roles: ROLE_USER }
+    - { path: ^/fr/calendar, roles: ROLE_USER }
+    - { path: ^/fr/contact, roles: ROLE_USER }
+    - { path: ^/fr/tags, roles: ROLE_ADMIN }
+    - { path: ^/fr/users, roles: ROLE_ADMIN }
+
+    #A SUPPRIMER----------------------------------------------------------------
+    - { path: ^/en/tasks, roles: ROLE_USER }
+    - { path: ^/en/calendar, roles: ROLE_USER }
+    - { path: ^/en/contact, roles: ROLE_USER }
+    - { path: ^/en/tags, roles: ROLE_ADMIN }
+    - { path: ^/en/users, roles: ROLE_ADMIN }
+    #A SUPPRIMER----------------------------------------------------------------
+
+    #A SUPPRIMER----------------------------------------------------------------
+    - { path: ^/jp/tasks, roles: ROLE_USER }
+    - { path: ^/jp/calendar, roles: ROLE_USER }
+    - { path: ^/jp/contact, roles: ROLE_USER }
+    - { path: ^/jp/tags, roles: ROLE_ADMIN }
+    - { path: ^/jp/users, roles: ROLE_ADMIN }
+    #A SUPPRIMER----------------------------------------------------------------

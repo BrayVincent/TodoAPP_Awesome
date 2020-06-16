@@ -19,6 +19,7 @@
         "symfony/swiftmailer-bundle": "^3.4",
         "symfony/translation": "5.1.*",
         "symfony/twig-pack": "^1.0",
+        "symfony/validator": "5.1.*",
         "symfony/yaml": "5.1.*",
         "tattali/calendar-bundle": "^1.2"
     },

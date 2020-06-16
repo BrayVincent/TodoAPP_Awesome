@@ -77,14 +77,18 @@ class AppFixtures extends Fixture
             // dans /config/packages/security.yaml
             $hash = $this->encoder->encodePassword($user, "password");
 
-            // On nourrit l'objet User
-            $user->setEmail($faker->safeEmail())
-                ->setPassword($hash);
-
             // Si premier utilisateur crée on lui donne le rôle admin
             if ($u === 0) {
-                $user->setRoles(["ROLE_ADMIN"]);
+                $user->setRoles(["ROLE_ADMIN"])
+                    ->setEmail('admin@admin.fr');
+            } else {
+                // On nourrit l'objet User
+                $user->setEmail($faker->safeEmail());
             }
+
+            $user->setPassword($hash)
+                ->setIsValid(false);
+
 
             // On fait persister les données
             $manager->persist($user);
