@@ -28,6 +28,10 @@
 								<a class="nav-link" href="{{ path('calendar') }}">{{ 'general.navbar.calendar' | trans }}
 								</a>
 							</li>
+							{# Menu Export PDF #}
+							<li class="nav-item">
+								<a href="{{ path('tasks_pdf') }}" class="nav-link" target="_blank">{{ 'nav.pdf' | trans }}</a>
+							</li>
 						{% endif %}
 
 					</ul>

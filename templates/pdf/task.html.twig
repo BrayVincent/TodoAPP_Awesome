@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{# Titre de l'onglet avec translate #}
+			{% block title %}
+				{{ 'titre.listing' | trans }}
+			{% endblock %}
+		</title>
+		<link
+		href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+		{# Si la langue sélectionnée est le japonais - appliquer une police particulière #}
+		{% if app.request.locale == 'jp' %}
+			<style>
+				@font-face {
+					font-family: 'jap';
+					font-style: normal;
+					font-weight: 500;
+					src: url('https://mplus-fonts.osdn.jp/webfonts/general-j/mplus-2-regular-sub.ttf') format('truetype');
+				}
+				body {
+					font-family: 'jap', sans-serif !important;
+				}
+			</style>
+		{% endif %}
+	</head>
+	{% block body %}
+		{# Titre du PDF avec translate #}
+		<h1 class="text-center">
+			<u>{{ 'titre.listing' | trans }}</u>
+		</h1>
+		<div class="container-fluid mt-5 small">
+			<div class="row">
+				<div class="col">
+					<table class="table table-bordered" id="tasksTable">
+						<thead>
+							{# Colonnes du tableau de listing avec translate #}
+							<tr>
+								<th>{{ 'listing.thead.id' | trans }}</th>
+								<th class="h6">{{ 'listing.thead.nom' | trans }}</th>
+								<th class="text-center h6">{{ 'listing.thead.datedebut' | trans }}</th>
+								<th class="text-center h6">{{ 'listing.thead.datefin' | trans }}</th>
+								<th class="text-center h6">{{ 'listing.thead.catego' | trans }}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{# Contenu des colonnes (boucle sur les tâches)#}
+							{% if tasks is defined %}
+								{% for task in tasks %}
+									<tr>
+										<th scope="row">{{ task.id }}</th>
+										<td>{{ task.name }}</td>
+										<td class="text-center">{{ task.startAt | date('d/m/Y H:i:s') }}</td>
+										<td class="text-center">{{ task.dueAt | date('d/m/Y H:i:s') }}</td>
+										<td class="text-center">{{ task.tag.name }}</td>
+									</tr>
+								{% endfor %}
+							{% endif %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	{% endblock %}
+</html>

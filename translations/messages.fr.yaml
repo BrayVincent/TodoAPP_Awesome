@@ -7,6 +7,7 @@ connexion:
 nav:
   accueil: Accueil
   titre: Faites le maintenant
+  pdf: "Export PDF"
 
 listing:
   ajout: Ajouter

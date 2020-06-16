@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Dompdf\Dompdf;
 use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
@@ -135,6 +136,37 @@ class TaskController extends AbstractController
         );
 
         return $this->redirectToRoute('tasks_listing');
+    }
+
+    /**
+     * Méthode pour générer un PDF à partir de la liste des tâches *
+     * @Route("/tasks/pdf",name="tasks_pdf")
+     */
+    public function pdf()
+    {
+        // On va récupérer les tâches 
+        $tasks = $this->repository->findAll();
+
+        // On crée de l'objet dompdf 
+        $dompdf = new Dompdf();
+
+        // On génère le contenu à partir du fichier twig 
+        $html = $this->renderView('pdf/task.html.twig', ['tasks' => $tasks]);
+
+        // On le charge dans le pdf 
+        $dompdf->loadHtml($html);
+
+        // On souhaite un format A4 en mode portrait (vertical) 
+        // pour un mode paysage saisir : 'landscape' 
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Obtenir le rendu 
+        $dompdf->render();
+
+        // On souhaite que le pdf s'ouvre dans le navigateur (sans téléchargement immédiat) 
+        // pour un téléchargement direct (changer false par true) 
+        // "tasks_listing.pdf" sera le nom par défaut lors de l'enregistrement du pdf 
+        $dompdf->stream("tasks_listing.pdf", ["Attachment" => false]);
     }
 
     /**
