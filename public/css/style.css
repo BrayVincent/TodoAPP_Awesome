@@ -10,3 +10,14 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.5);
 }
+
+#task_mail_email {
+  width: 400px;
+}
+#task_mail_save {
+  margin-top: 10px;
+  margin-left: 320px;
+}
+.p {
+  font-style: italic;
+}

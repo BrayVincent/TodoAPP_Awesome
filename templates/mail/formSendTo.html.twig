@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/style.css')}}">
+{% endblock %}
+{% block body %}
+	<div class="jumbotron pl pl-5">
+		<div class="text">
+			<h1 class="mb mb-5">Envoyer une tâche</h1>
+			{% if task is defined %}
+				<span>Vous allez envoyer la tâche
+					<span class="font-weight-bold">
+						n°{{ task.id}}</span>
+					({{ task.tag.name}}) :</span>
+				<p class="font-italic">{{ task.name}}</p>
+				{{ form_start(form) }}
+				{{ form_widget(form) }}
+				{{ form_end(form) }}
+			{% endif %}
+		</div>
+		<div class="text-center">
+			<img class="img-fluid" src="/img/task_mail.png" alt="mail has been sent">
+		</div>
+	</div>
+{% endblock %}
