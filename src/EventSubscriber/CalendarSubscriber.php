@@ -31,15 +31,7 @@ class CalendarSubscriber implements EventSubscriberInterface
         ];
     }
 
-    //Avoir les couleurs par tâche
-    public function tagNameById(Task $task)
-    {
-        $taskId = $task->getTag();
-        $tag = $this->manager->getRepository(Tag::class);
-        $tagId = $tag->findOneBy(['id' => $taskId]);
-        $color = $tagId->getName();
-        return $color;
-    }
+
 
 
     public function load(CalendarEvent $calendar)
@@ -58,7 +50,7 @@ class CalendarSubscriber implements EventSubscriberInterface
 
         foreach ($tasks as $task) {
             //Afficher les couleuur pour chaque tâche
-            $color = $this->tagNameById($task);
+            $color = $task->getTag()->getName();
             //Créer un évenement pour chaque tâche
             $taskEvent = new Event(
                 $task->getName(), //Titre
@@ -74,6 +66,20 @@ class CalendarSubscriber implements EventSubscriberInterface
                 'backgroundColor' => $color,
                 'borderColor' => $color,
             ]);
+
+            $taskEvent->addOption(
+                'description',
+                $task->getDescription()
+            );
+            $taskEvent->addOption(
+                'update',
+                $this->router->generate('task_update', ['id' => $task->getId(),])
+            );
+            $taskEvent->addOption(
+                'delete',
+                $this->router->generate('task_delete', ['id' => $task->getId(),])
+            );
+
 
             // Ajouter les évènements au calendrier
             $calendar->addEvent($taskEvent);

@@ -8,6 +8,31 @@
 {% block body %}
 
 	<div id="calendar-holder" class='col-6 mx-auto'></div>
+	<div id="fullCalModal" class="modal fade" style="z-index: 9999">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+
+					<h4 id="modalTitle" class="modal-title"></h4>
+				</div>
+				<div id="modalBody" class="modal-body">
+
+					<p id="ev_start" class="modal-body"></p>
+					<p id="ev_end" class="modal-body"></p>
+					<p id="ev_desc" class="modal-body"></p>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">
+						{{'calendar.close' | trans}}</button>
+					<div id="btnUpdate"></div>
+					<div id="btnDelete"></div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
 {% endblock %}
 {% block javascripts %}
 	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
@@ -21,7 +46,6 @@ var calendarEl = document.getElementById('calendar-holder');
 
 var calendar = new FullCalendar.Calendar(calendarEl, {
 defaultView: 'dayGridMonth',
-editable: true,
 eventSources: [
 {
 url: "{{ path('fc_load_events') }}",
@@ -41,10 +65,36 @@ right: 'dayGridMonth,timeGridWeek,timeGridDay'
 plugins: [
 'interaction', 'dayGrid', 'timeGrid'
 ],
+
 // https://fullcalendar.io/docs/plugin-index
-timeZone: 'UTC'
+timeZone: 'UTC',
+
+// Evenement click sur les tâches
+eventClick: function (info) {
+
+$('#modalTitle').html(info.event.title);
+$('#ev_titulo').html(info.event.title);
+
+$('#ev_start').html('Date de début : ' + info.event.start);
+$('#ev_end').html('Date de fin : ' + info.event.end);
+$('#ev_desc').html('Description : ' + info.event.extendedProps.description);
+
+// bouton Modifier
+var btnUpdate = document.getElementById('btnUpdate');
+var actionUpdate = '<a href="' + info.event.extendedProps.update + '" class="btn btn-primary" > {{ 'calendar.update'  | trans }}</a>';
+btnUpdate.innerHTML = actionUpdate;
+// Bouton supprimer
+var btnDelete = document.getElementById('btnDelete');
+var actionDelete = '<a href="' + info.event.extendedProps.delete + '" class="btn btn-danger" > {{ 'calendar.delete'  | trans }}</a>';
+btnDelete.innerHTML = actionDelete;
+
+$('#fullCalModal').modal('show');
+// change the border color just for fun
+info.el.style.borderColor = 'red';
+}
 });
 calendar.render();
 });
 	</script>
+
 {% endblock %}

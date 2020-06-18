@@ -119,3 +119,7 @@ user:
     password: Type the password.
     password_repeat: Password confirmation.
     not_match: The password fields must match.
+calendar:
+  close: Close
+  update: Update
+  delete: Delete

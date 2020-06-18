@@ -119,3 +119,8 @@ user:
     password: 名前
     password_repeat: 発効日
     not_match: あなたの死者を食べます
+
+calendar:
+  close: 閉じる
+  update: 編集する
+  delete: 削除する
