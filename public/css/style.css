@@ -1,23 +1,39 @@
-body {
-  padding-top: 70px;
+body{
+    padding-top: 70px;
 }
-
-#slogan {
-  margin-top: 5px;
-  font-size: 50px;
+#slogan{
+margin-top: 5px;
+font-size: 50px;
 }
-#facing {
-  border-radius: 10px;
-  box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.5);
+#facing{
+border-radius: 10px;
+box-shadow: 0 0 4px 4px rgba(0,0,0,0.5);
 }
-
 #task_mail_email {
-  width: 400px;
+width: 400px;
 }
 #task_mail_save {
-  margin-top: 10px;
-  margin-left: 320px;
+margin-top: 10px;
+margin-left: 320px;
 }
 .p {
-  font-style: italic;
+font-style: italic;
 }
+#langue {
+    width: 40px;
+    padding-right: 5px;
+    filter: grayscale(100%);
+}
+#langue:hover {
+    filter: grayscale(50%);
+    width: 41px;
+}
+#langue-active {
+    width: 40px;
+    padding-right: 5px;
+}
+
+.nav-item.active a {
+    color:aqua;
+}
+    

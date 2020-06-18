@@ -1,59 +1,49 @@
 security:
-  encoders:
-    App\Entity\User:
-      algorithm: auto
+    encoders:
+        App\Entity\User:
+            algorithm: auto
 
-  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-  providers:
-    # used to reload user from session & other features (e.g. switch_user)
-    app_user_provider:
-      entity:
-        class: App\Entity\User
-        property: email
-  firewalls:
-    dev:
-      pattern: ^/(_(profiler|wdt)|css|images|js)/
-      security: false
-    main:
-      anonymous: true
-      lazy: true
-      provider: app_user_provider
-      guard:
-        authenticators:
-          - App\Security\LoginFormAuthenticator
-      logout:
-        path: app_logout
-        target: app_login
-        invalidate_session: true
-        # where to redirect after logout
-        # target: app_any_route
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+            lazy: true
+            provider: app_user_provider
+            guard:
+                authenticators:
+                    - App\Security\LoginFormAuthentificatorAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                target: app_login
+                invalidate_session: true
 
-      # activate different ways to authenticate
-      # https://symfony.com/doc/current/security.html#firewalls-authentication
-      # https://symfony.com/doc/current/security/impersonating_user.html
-      # switch_user: true
+            access_denied_handler: App\Security\AccessDeniedHandler
+            access_denied_url: tasks_listing
 
-  # Easy way to control access for large sections of your site
-  # Note: Only the *first* access control that matches will be used
-  access_control:
-    - { path: ^/fr/tasks, roles: ROLE_USER }
-    - { path: ^/fr/calendar, roles: ROLE_USER }
-    - { path: ^/fr/contact, roles: ROLE_USER }
-    - { path: ^/fr/tags, roles: ROLE_ADMIN }
-    - { path: ^/fr/users, roles: ROLE_ADMIN }
 
-    #A SUPPRIMER----------------------------------------------------------------
-    - { path: ^/en/tasks, roles: ROLE_USER }
-    - { path: ^/en/calendar, roles: ROLE_USER }
-    - { path: ^/en/contact, roles: ROLE_USER }
-    - { path: ^/en/tags, roles: ROLE_ADMIN }
-    - { path: ^/en/users, roles: ROLE_ADMIN }
-    #A SUPPRIMER----------------------------------------------------------------
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
 
-    #A SUPPRIMER----------------------------------------------------------------
-    - { path: ^/jp/tasks, roles: ROLE_USER }
-    - { path: ^/jp/calendar, roles: ROLE_USER }
-    - { path: ^/jp/contact, roles: ROLE_USER }
-    - { path: ^/jp/tags, roles: ROLE_ADMIN }
-    - { path: ^/jp/users, roles: ROLE_ADMIN }
-    #A SUPPRIMER----------------------------------------------------------------
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+    - { path: ^/(%app_locales%)/tasks, roles: ROLE_USER }
+    - { path: ^/(%app_locales%)/calendar, roles: ROLE_USER }
+    - { path: ^/(%app_locales%)/contact, roles: ROLE_USER }
+    - { path: ^/(%app_locales%)/tags, roles: ROLE_ADMIN }
+    - { path: ^/(%app_locales%)/users, roles: ROLE_ADMIN }
+
+

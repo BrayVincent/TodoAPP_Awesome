@@ -4,18 +4,18 @@
 {% block stylesheets %}
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/
-								dt/dt-1.10.21/datatables.min.css"/>
+						dt/dt-1.10.21/datatables.min.css"/>
 {% endblock %}
 {% block body %}
 	<div class="container mt-5">
 		<table class="table table-striped tabled-bordered" id="tasksTable">
 			<thead>
-				<th>{{ 'general.form.id' | trans }}</th>
-				<th>{{ 'general.form.name' | trans }}</th>
-				<th>{{ 'general.form.tag' | trans }}</th>
-				<th>{{ 'general.form.description' | trans }}</th>
-				<th>{{ 'general.form.startAt' | trans }}</th>
-				<th>{{ 'general.form.dueAt' | trans }}</th>
+				<th>Id</th>
+				<th>Nom</th>
+				<th>Tag</th>
+				<th>Description</th>
+				<th>Date de début</th>
+				<th>Date Effective</th>
 			</thead>
 			<tbody>
 				{% if task is defined %}

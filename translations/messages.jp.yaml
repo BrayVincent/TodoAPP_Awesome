@@ -1,25 +1,25 @@
 messaccueil: ここから仕事をやろうー
 connexion:
-  phrase: "ユーザー名 :"
-  btnco: "ログイン"
-  btndeco: "名前"
+  phrase: 'ユーザー名 :'
+  btnco: 'ログイン'
+  btndeco: '名前'
 
 nav:
-  accueil: "ホーム"
-  titre: "今すぐやれ！"
-  pdf: "PDFをエクスポート"
+  accueil: 'ホーム'
+  titre: '今すぐやれ！'
+  pdf: 'PDFをエクスポート'
 
 listing:
-  ajout: "加える"
-  message: "効日前"
+  ajout: '加える'
+  message: '効日前'
   thead:
-    id: "ID"
-    nom: "名前"
-    catego: "カテゴリ"
-    datedebut: "名前"
-    datefin: "発効日"
-    modifier: "名前"
-    supprimer: "発効日"
+    id: 'ID'
+    nom: '名前'
+    catego: 'カテゴリ'
+    datedebut: '名前'
+    datefin: '発効日'
+    modifier: '名前'
+    supprimer: '発効日'
   modi: 名前
   sup: 発効日
   envoi: 除し
@@ -38,81 +38,8 @@ flash:
     modif: 前名前
     suppr: メッセージを削除しました。
     errReCaptcha: 私のキュウリを吸う
+    doublon: 名前キュウ前名
 
-login:
-  sign: 前名前除し
-  email: ました
-  pass: セージ
-
-titre:
-  home: 名前
-  login: 前名前!
-  listing: 名前!前名前除し
-  tag: 名前前
-
-tag:
-  btn:
-    add: Ajouter une catégorie
-  alert:
-    alreadyexist: Le nom est déjà utilisé
-    busy: La Catégorie est utilisée
-  success:
-    add: Votre catégorie a bien été ajoutée
-    update: Votre catégorie a bien été modifiée
-  form:
-    label:
-      name: Nom de la catégorie
-general:
-  navbar:
-    home: Accueil
-    calendar: Calendrier
-    logout: Déconnexion
-    login: Connexion
-  slogan: It is time for us to buckle down !
-  btn:
-    add: Ajouter
-    update: Modifier
-    delete: Supprimer
-    send: Envoyer
-  title:
-    welcome: Bienvenue
-    brand: Do it Now
-    login: Connexion
-    index:
-      tag: Liste des Catégories
-      task: Liste des Tâches
-  form:
-    save: Enregistrer
-    id: ID
-    name: Nom
-    tag: Catégorie
-    task: Tâche
-    description: Description
-    startAt: Date de Début
-    dueAt: Date Effective
-    email: Email
-    password: Mot de passe
-  alert:
-    mail:
-      notbefound: Email inconnu
-  success:
-    update: Vos modifications ont bien été enregistrées
-  connect:
-    already: Vous êtes déjà connecté(e)
-task:
-  form:
-    label:
-      name: Nom de la tâche
-      description: Description
-      startAt: Date de début
-      dueAt: Date effective
-      tag: Catégorie
-  mail:
-    success: Votre tâche vous a bien été envoyée
-security:
-  message:
-    signin: Merci de vous enregistrer
-    login: Merci de vous connecter
 user:
   form:
     email: 発効日
@@ -120,7 +47,42 @@ user:
     password_repeat: 発効日
     not_match: あなたの死者を食べます
 
+
+login:
+  sign: 前名前除し
+  email: ました
+  pass: セージ
+
+titre:
+    home: 名前
+    login: 前名前!
+    listing: 名前!前名前除し
+    tag: 名前前
+
 calendar:
   close: 閉じる
   update: 編集する
   delete: 削除する
+  menu: カレンダー
+
+datatable:
+  processing:     処理中...
+  search:         "検索:"
+  lengthMenu:     _MENU_ 件表示
+  info:            _TOTAL_ 件中 _START_ から _END_ まで表示
+  infoEmpty:       0 件中 0 から 0 まで表示
+  infoFiltered:   （全 _MAX_ 件より抽出）
+  infoPostFix:    ""
+  loadingRecords: 読み込み中...
+  zeroRecords:    一致するレコードがありません
+  emptyTable:     テーブルにデータがありません
+  paginate:
+    first:      先頭
+    previous:   最終
+    next:       次
+    last:       前
+
+general:
+  title:
+    index:
+      tag: タグ

@@ -1,13 +1,13 @@
 messaccueil: It is time for us to buckle down !
 connexion:
-  phrase: "You are logged as :"
-  btnco: "Log in"
-  btndeco: "Log out"
+  phrase: 'You are logged as :'
+  btnco: 'Log in'
+  btndeco: 'Log out'
 
 nav:
-  accueil: "Home"
-  titre: "DO IT NOW"
-  pdf: "PDF Export"
+  accueil: 'Home'
+  titre: 'DO IT NOW'
+  pdf: 'PDF Export'
 
 listing:
   ajout: Add
@@ -20,6 +20,7 @@ listing:
     datefin: End date
     modifier: Updating
     supprimer: Deleting
+    couleur: Color
   modi: Update
   sup: Delete
   envoi: Send
@@ -38,6 +39,15 @@ flash:
     modif: The user has been updated.
     suppr: The user has been deleted.
     errReCaptcha: reCaptcha error.
+    doublon: User already exists.
+
+user:
+  form:
+    email: Enter the user's e-mail.
+    password: Type the password.
+    password_repeat: Password confirmation.
+    not_match: The password fields must match.
+
 
 login:
   sign: Please sign in
@@ -45,10 +55,41 @@ login:
   pass: Password
 
 titre:
-  home: Welcome
-  login: Log in!
-  listing: List of simple and sweet tasks
-  tag: Tags list
+    home: Welcome
+    login: Log in!
+    listing: List of simple and sweet tasks
+    tag: Tags list
+calendar:
+  close: Close
+  update: Update
+  delete: Delete
+  menu: Calendar
+  
+datatable:
+  processing: Processing...
+  search: "Search:"
+  lengthMenu: Show _MENU_ entries
+  info: Showing _START_ to _END_ of _TOTAL_ entries
+  infoEmpty: Showing 0 to 0 of 0 entries
+  infoFiltered:   (filtered from _MAX_ total entries)
+  infoPostFix:    ""
+  loadingRecords: Loading...
+  zeroRecords:    No matching records found
+  emptyTable:     No data available in table
+  paginate:
+    first:      First
+    previous:   Previous
+    next:       Next
+    last:       Last
+
+general:
+  title:
+    index:
+      tag: Tags
+  btn:
+    update: Update
+    delete: Delete
+    send: Send
 
 tag:
   btn:
@@ -62,64 +103,4 @@ tag:
   form:
     label:
       name: Nom de la catégorie
-general:
-  navbar:
-    home: Accueil
-    calendar: Calendrier
-    logout: Déconnexion
-    login: Connexion
-  slogan: It is time for us to buckle down !
-  btn:
-    add: Ajouter
-    update: Update
-    delete: Delete
-    send: Send
-  title:
-    welcome: Bienvenue
-    brand: Do it Now
-    login: Connexion
-    index:
-      tag: Liste des Catégories
-      task: Liste des Tâches
-  form:
-    save: Enregistrer
-    id: ID
-    name: Nom
-    tag: Catégorie
-    task: Tâche
-    description: Description
-    startAt: Date de Début
-    dueAt: Date Effective
-    email: Email
-    password: Mot de passe
-  alert:
-    mail:
-      notbefound: Email inconnu
-  success:
-    update: Vos modifications ont bien été enregistrées
-  connect:
-    already: Vous êtes déjà connecté(e)
-task:
-  form:
-    label:
-      name: Nom de la tâche
-      description: Description
-      startAt: Date de début
-      dueAt: Date effective
-      tag: Catégorie
-  mail:
-    success: Votre tâche vous a bien été envoyée
-security:
-  message:
-    signin: Merci de vous enregistrer
-    login: Merci de vous connecter
-user:
-  form:
-    email: Enter the user's e-mail.
-    password: Type the password.
-    password_repeat: Password confirmation.
-    not_match: The password fields must match.
-calendar:
-  close: Close
-  update: Update
-  delete: Delete
+      color: Choose color

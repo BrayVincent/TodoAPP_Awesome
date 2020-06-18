@@ -10,65 +10,51 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TaskType extends AbstractType
 {
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array('label' => $this->translator->trans('task.form.label.name'), 'attr' => array(
-                'class' => 'form-control',
-                'title' => $this->translator->trans('task.form.label.name'),
+            ->add('name', TextType::class, array('label'=>'Nom de la tâche','attr'=>array(
+                'class'=>'form-control',
+                'title'=>'Nom de la tâche'
             )))
-            ->add('description', TextareaType::class, array('label' => $this->translator->trans('task.form.label.description'), 'attr' => array(
-                'class' => 'form-control',
-                'title' => $this->translator->trans('task.form.label.description'),
+            ->add('description', TextareaType::class, array('label'=>'Description', 'attr'=>array(
+                'class'=>'form-control',
+                'title'=>'Description'
             )))
-            ->add('startAt', DateTimeType::class, array('widget' => 'single_text', 'label' => $this->translator->trans('task.form.label.startAt'), 'attr' => array(
-                'class' => 'form-control',
-                'title' => $this->translator->trans('task.form.label.startAt')
+            ->add('startAt', DateTimeType::class, array('widget'=>'single_text', 'label'=>"Date de début", 'attr'=>array(
+                'class'=>'form-control',
+                'title'=>"Date de début"
             )))
-            ->add('dueAt', DateTimeType::class, array('widget' => 'single_text', 'label' => $this->translator->trans('task.form.label.dueAt'), 'attr' => array(
-                'class' => 'form-control',
-                'title' => $this->translator->trans('task.form.label.dueAt'),
+            ->add('dueAt', DateTimeType::class, array('widget'=>'single_text', 'label'=>"Date de fin", 'attr'=>array(
+                'class'=>'form-control',
+                'title'=>"Date de fin"
             )))
             ->add('tag', EntityType::class, [
-                'class' => Tag::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
+                'class'=> Tag::class,
+                'query_builder'=> function(EntityRepository $er){
+                    return $er->createQueryBuilder('c')->orderBy('c.name','ASC');
                 },
-                'choice_label' => 'name',
-                'label' => $this->translator->trans('task.form.label.tag'),
-                'attr' => array(
-                    'class' => 'form-control',
-                    'title' => $this->translator->trans('task.form.label.tag'),
+                'choice_label'=>'name',
+                'label'=>'Catégorie',
+                'attr'=>array(
+                    'class'=>'form-control',
+                    'title'=>'Catégorie'
                 )
+
             ])
             ->add('save', SubmitType::class, array(
-                'label' => $this->translator->trans('general.form.save'),
+                'label'=>'Enregistrer',
                 'attr' => array(
-                    'class' => 'btn btn-primary',
-                    'title' => $this->translator->trans('general.form.save')
+                    'class'=>'btn btn-primary',
+                    'title'=>'Enregister'
                 )
-            ));
+                ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

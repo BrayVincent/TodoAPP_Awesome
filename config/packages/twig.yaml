@@ -1,7 +1,7 @@
 twig:
-  default_path: "%kernel.project_dir%/templates"
-  debug: "%kernel.debug%"
-  strict_variables: "%kernel.debug%"
-  # On déclare ci-dessous le nom de la variable globale
-  globals:
-    locales: "%app.locales%"
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    # On déclare ci-dessous le nom de la variable globale
+    globals:
+        locales: '%app_locales%'

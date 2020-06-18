@@ -1,59 +1,85 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-	{{ 'general.title.index.task' | trans }}
+{% block title %}Liste des tâches à réaliser :
 {% endblock %}
+{% block stylesheet %}
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/b-1.6.2/datatables.min.css"/>
 
-{% block stylesheets %}
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
 {% endblock %}
-
 {% block body %}
-	<p>{{ 'listing.message' | trans }}</p>
-	<div class="container mt-5">
-		<a href="{{ path('task_create') }}" class="btn btn-primary">{{ 'general.btn.add' | trans }}</a>
+
+	<div class="container mt-5 mx-auto col-8">
+		
+		<a href="{{ path('task_create') }}" class="btn btn-primary">Ajouter une tâche</a>
+		<a href="{{ path('pdf_generate',{'entity': 'task' } ) }}" class="btn btn-primary ml-2" target="_blank">{{ 'nav.pdf' | trans }}</a>
+
 		<table class="table table-striped tabled-bordered" id="tasksTable">
 			<thead>
-				<th>{{ 'general.form.id' | trans }}</th>
-				<th>{{ 'general.form.name' | trans }}</th>
-				<th>{{ 'general.form.startAt' | trans }}</th>
-				<th>{{ 'general.form.dueAt' | trans }}</th>
-				<th>{{ 'general.form.tag' | trans }}</th>
+				<th>Id</th>
+				<th>Nom</th>
+				<th>Date de début</th>
+				<th>Date effective</th>
+				<th>Catégorie</th>
 				<th></th>
 				<th></th>
 				<th></th>
 			</thead>
 			<tbody>
+
 				{% if tasks is defined %}
 					{% for task in tasks %}
 						<tr>
-							<th scope="row">{{ task.id }}</th>
-							<td>{{ task.name }}</td>
-							<td>{{ task.startAt | date('d/m/Y H:i') }}</td>
-							<td>{{ task.dueAt | date('d/m/Y H:i') }}</td>
-							<td>{{ task.tag.name }}</td>
-							<td>
-								<a href="{{ path('task_mail' , {'id' : task.id })}}" class="btn btn-outline-primary">{{ 'general.btn.send' | trans }}</a>
-							</td>
-							<td>
-								<a href="{{ path('task_update', {'id': task.id })}}" class="btn btn-success">{{ 'general.btn.update' | trans }}</a>
-							</td>
-							<td>
-								<a href="{{ path('task_delete', {'id': task.id })}}" class="btn btn-danger">{{ 'general.btn.delete' | trans }}</a>
-							</td>
-						</tr>
+                            <th scope="row">{{ task.id }}</th>
+                            <td>{{ task.name }}</td>
+                            <td>{{ task.startAt | date('d/m/Y H:i') }}</td>
+                            <td>{{ task.dueAt | date('d/m/Y H:i') }}</td>
+                            <td style="background-color:{{ task.tag.color }}">{{ task.tag.name }}</td>
+                            <td>
+                                <a href="{{ path('task_mail' , {'id' : task.id })}}" class="btn btn-outline-primary">{{ 'general.btn.send' | trans }}</a>
+                            </td>
+                            <td>
+                                <a href="{{ path('task_update', {'id': task.id })}}" class="btn btn-success">{{ 'general.btn.update' | trans }}</a>
+                            </td>
+                            <td>
+                                <a href="{{ path('task_delete', {'id': task.id })}}" class="btn btn-danger">{{ 'general.btn.delete' | trans }}</a>
+                            </td>
+                        </tr>
+
 					{% endfor %}
 				{% endif %}
+
+
 			</tbody>
 		</table>
 	</div>
 
 {% endblock %}
+
 {% block javascripts %}
 	<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
+
 	<script>
 		$(document).ready(function () {
-$('#tasksTable').DataTable();
+$('#tasksTable').DataTable({
+language: {
+processing: "{{ 'datatable.processing' | trans }}",
+search: "{{ 'datatable.search' | trans }}",
+lengthMenu: "{{ 'datatable.lengthMenu' | trans }}",
+info: "{{ 'datatable.info' | trans }}",
+infoEmpty: "{{ 'datatable.infoEmpty' | trans }}",
+infoFiltered: "{{ 'datatable.infoFiltered' | trans }}",
+infoPostFix: "{{ 'datatable.infoPostFix' | trans }}",
+loadingRecords: "{{ 'datatable.loadingRecords' | trans }}",
+zeroRecords: "{{ 'datatable.zeroRecords' | trans }}",
+emptyTable: "{{ 'datatable.emptyTable' | trans }}",
+paginate: {
+first: "{{ 'datatable.paginate.first' | trans }}",
+previous: "{{ 'datatable.paginate.previous' | trans }}",
+next: "{{ 'datatable.paginate.next' | trans }}",
+last: "{{ 'datatable.paginate.last' | trans }}"
+}
+}
+});
 });
 	</script>
 {% endblock %}

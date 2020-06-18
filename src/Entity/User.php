@@ -35,9 +35,19 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      */
     private $isValid;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $tokenAt;
 
     public function getId(): ?int
     {
@@ -122,9 +132,33 @@ class User implements UserInterface
         return $this->isValid;
     }
 
-    public function setIsValid(bool $isValid): self
+    public function setIsValid(?bool $isValid): self
     {
         $this->isValid = $isValid;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getTokenAt(): ?\DateTimeInterface
+    {
+        return $this->tokenAt;
+    }
+
+    public function setTokenAt(?\DateTimeInterface $tokenAt): self
+    {
+        $this->tokenAt = $tokenAt;
 
         return $this;
     }

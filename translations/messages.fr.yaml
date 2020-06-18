@@ -1,13 +1,13 @@
 messaccueil: Il est temps d'y aller gaiement !
 connexion:
-  phrase: "Vous etes connecté en tant que :"
-  btnco: Se connecter
-  btndeco: Deconnexion
+  phrase: 'Vous etes connecté en tant que :'
+  btnco: 'Se connecter'
+  btndeco: 'Deconnexion'
 
 nav:
-  accueil: Accueil
-  titre: Faites le maintenant
-  pdf: "Export PDF"
+  accueil: 'Accueil'
+  titre: 'Faites le maintenant'
+  pdf: 'Export PDF'
 
 listing:
   ajout: Ajouter
@@ -20,6 +20,7 @@ listing:
     datefin: Date fin
     modifier: Modification
     supprimer: Suppression
+    couleur: Couleur
   modi: Modifier
   sup: Supprimer
   envoi: Envoyer
@@ -38,17 +39,56 @@ flash:
     modif: Utilisateur modifié.
     suppr: Utilisateur supprimé.
     errReCaptcha: Erreur de reCaptcha.
+    doublon: L'utilisateur existe déjà.
+
+user:
+  form:
+    email: Entrez le mail de l'utilisateur.
+    password: Saississez le mot de passe.
+    password_repeat: Confirmez le mot de passe.
+    not_match: Les mots de passe ne correspondent pas.
 
 login:
   sign: S'il vous plait, connectez-vous
   email: Courriel
   pass: Mot de passe
-
+  
 titre:
-  home: Welcome
-  login: Log in!
-  listing: Liste de jolies tâches gentilles et simples
-  tag: Liste des tags
+    home: Welcome
+    login: Log in!
+    listing: Liste de jolies tâches gentilles et simples
+    tag: Liste des tags
+calendar:
+  close: Fermer
+  update: Modifier
+  delete: Supprimer
+  menu: Calendrier
+  
+datatable:
+  processing:     Traitement en cours...
+  search:         "Rechercher :"
+  lengthMenu:     Afficher _MENU_ éléments
+  info:           Affichage de l'élément _START_ à _END_ sur _TOTAL_ éléments
+  infoEmpty:      Affichage de l'élément 0 à 0 sur 0 éléments
+  infoFiltered:   (filtres de _MAX_ éléments au total)
+  infoPostFix:    ""
+  loadingRecords: Chargement en cours...
+  zeroRecords:    Aucun élément à afficher
+  emptyTable:     Aucune donnée disponible dans le tableau
+  paginate:
+    first:      Premier
+    previous:   Précédent
+    next:       Suivant
+    last:       Dernier
+  
+general:
+  title:
+    index:
+      tag: Tags
+  btn:
+    update: Modifier
+    delete: Supprimer
+    send: Mail
 
 tag:
   btn:
@@ -62,65 +102,4 @@ tag:
   form:
     label:
       name: Nom de la catégorie
-general:
-  navbar:
-    home: Accueil
-    calendar: Calendrier
-    logout: Déconnexion
-    login: Connexion
-  slogan: It is time for us to buckle down !
-  btn:
-    add: Ajouter
-    update: Modifier
-    delete: Supprimer
-    send: Envoyer
-  title:
-    welcome: Bienvenue
-    brand: Do it Now
-    login: Connexion
-    index:
-      tag: Liste des Catégories
-      task: Liste des Tâches
-  form:
-    save: Enregistrer
-    id: ID
-    name: Nom
-    tag: Catégorie
-    task: Tâche
-    description: Description
-    startAt: Date de Début
-    dueAt: Date Effective
-    email: Email
-    password: Mot de passe
-  alert:
-    mail:
-      notbefound: Email inconnu
-  success:
-    update: Vos modifications ont bien été enregistrées
-  connect:
-    already: Vous êtes déjà connecté(e)
-task:
-  form:
-    label:
-      name: Nom de la tâche
-      description: Description
-      startAt: Date de début
-      dueAt: Date effective
-      tag: Catégorie
-  mail:
-    success: Votre tâche vous a bien été envoyée
-security:
-  message:
-    signin: Merci de vous enregistrer
-    login: Merci de vous connecter
-user:
-  form:
-    email: Entrez le mail de l'utilisateur.
-    password: Saississez le mot de passe.
-    password_repeat: Confirmez le mot de passe.
-    not_match: Les mots de passe ne correspondent pas.
-
-calendar:
-  close: Fermer
-  update: Modifier
-  delete: Supprimer
+      color: Choisir la couleur

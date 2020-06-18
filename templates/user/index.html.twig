@@ -1,66 +1,81 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des tâches{% endblock %}
+{% block title %}Liste des tâches
+{% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
 {% endblock %}
 
 {% block body %}
 
 
+	<div class="container">
+		<h1>Todo App</h1>
+	</br>
+	{% for message in app.flashes('success') %}
+		<div class="alert alert-success">
+			{{ message }}
+		</div>
+	{% endfor %}
+</br>
 
-        <div class="container">
-            <h1>Todo App</h1>
-            </br>
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success">
-                    {{ message }}
-                </div>
-            {% endfor %}
-            </br>
+<a href='{{ path("user_create") }}' class="btn btn-primary">Ajouter un utilisateur</a></br></br><table class="table table-striped tabled-bordered" id="usersTable"><thead>
+<th>Id</th>
+<th>Email</th>
+<th>Compte validé</th>
+<th>Token</th>
+<th>Date création token</th>
+<th></th>
+<th></th></thead><tbody>
+{% if users is defined %}
+	{% for user in users %}
+		<tr>
+			<th scope="row">
+				{{ user.id }}
+			</th>
+			<td>
+				{{ user.email }}
+			</td>
+			<td>
+				{{ user.isvalid }}
+			</td>
+			<td>
+				{{ user.token }}
+			</td>
+			<td>
+				{% if not user.tokenAt is null %}
+					{{ user.tokenAt | date("m/d/Y h:i:s") }}
+				{% endif %}
+			</td>
+			<td>
+				<a href='{{ path("update_user", {'id': user.id}) }}' class="btn btn-success">Réinitialiser</a>
+			</td>
+			<td>
+				<a href='{{ path("user_delete", {'id': user.id}) }}' class="btn btn-danger">Supprimer</a>
+			</td>
 
-            <a href='{{ path("user_create") }}' class="btn btn-primary">Ajouter un utilisateur</a>
-            </br></br>
-            <table class="table table-striped tabled-bordered" id="usersTable">
-                <thead>
-                    <th>Id</th>
-                    <th>Email</th>
-                    <th>Mot de passe</th>
-                    <th></th>
-                    <th></th>
-
-                </thead>
-                <tbody>
-                    {% if users is defined %}
-                        {% for user in users %}
-                            <tr>
-                            <th scope="row"> {{ user.id }} </th>
-                            <td> {{ user.email }} </td>
-                            <td> {{ user.password }} </td>
-                            <td> <a href='{{ path("update_user", {'id': user.id}) }}' class="btn btn-success">Réinitialiser</a> </td>
-                            <td> <a href='{{ path("user_delete", {'id': user.id}) }}' class="btn btn-danger">Supprimer</a> </td>
-
-                            </tr>
-                        {% endfor %}
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
-
-
-{% endblock %}
-
-{% block javascripts %}
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
-
-
-    <script>
-        $(document).ready( function () {
-            $('#usersTable').DataTable();
-        } );
-
-
-    </script>
-
-{% endblock %}
+		</tr>
+	{% endfor %}
+{% endif %}</tbody></table></div>{% endblock %}{% block javascripts %}<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script><script>$(document).ready(function () {
+$('#usersTable').DataTable({
+language: {
+processing: "{{ 'datatable.processing' | trans }}",
+search: "{{ 'datatable.search' | trans }}",
+lengthMenu: "{{ 'datatable.lengthMenu' | trans }}",
+info: "{{ 'datatable.info' | trans }}",
+infoEmpty: "{{ 'datatable.infoEmpty' | trans }}",
+infoFiltered: "{{ 'datatable.infoFiltered' | trans }}",
+infoPostFix: "{{ 'datatable.infoPostFix' | trans }}",
+loadingRecords: "{{ 'datatable.loadingRecords' | trans }}",
+zeroRecords: "{{ 'datatable.zeroRecords' | trans }}",
+emptyTable: "{{ 'datatable.emptyTable' | trans }}",
+paginate: {
+first: "{{ 'datatable.paginate.first' | trans }}",
+previous: "{{ 'datatable.paginate.previous' | trans }}",
+next: "{{ 'datatable.paginate.next' | trans }}",
+last: "{{ 'datatable.paginate.last' | trans }}"
+}
+}
+});
+});</script>{% endblock %}

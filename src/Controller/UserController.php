@@ -10,9 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class UserController extends AbstractController
 {
@@ -36,6 +37,7 @@ class UserController extends AbstractController
      */
     private $translator;
 
+    const TOKENMAXMINUTES = '15';
 
     /**
      * constructeur de UserController
@@ -44,18 +46,16 @@ class UserController extends AbstractController
      * @param EntityManagerInterface $manager
      * @param TranslatorInterface $translator
      */
-    public function __construct(
-        UserRepository $repository,
-        EntityManagerInterface $manager,
-        UserPasswordEncoderInterface $encoder,
-        TranslatorInterface $translator
-    ) {
+    public function __construct(UserRepository $repository,
+                                EntityManagerInterface $manager,
+                                UserPasswordEncoderInterface $encoder,
+                                TranslatorInterface $translator)
+    {
         $this->repository = $repository;
         $this->manager = $manager;
         $this->encoder = $encoder;
         $this->translator = $translator;
     }
-
 
     /**
      * @Route("/users/listing", name="users_listing")
@@ -74,16 +74,18 @@ class UserController extends AbstractController
         ]);
     }
 
-
     /**
      * @Route("/users/create", name="user_create")
-     *  @Route("/users/update/{id}", name="update_user", requirements={"id"="\d+"})
+     * @Route("/users/update/{id}", name="update_user", requirements={"id"="\d+"})
      * @param Request $request
      * @return Response
      */
-    public function user(User $user = null, Request $request): Response
-    {
-
+    public function user(
+        User $user = null,
+        Request $request,
+        TokenGeneratorInterface $tokenGenerator,
+        \Swift_Mailer $mailer
+    ): Response {
         if (!$user) {
             $user = new User();
             $flag = true;
@@ -92,64 +94,120 @@ class UserController extends AbstractController
         }
 
         //création formulaire
-        $form = $this->createForm(UserType::class, $user, array());
+        $form = $this->createForm(UserType::class, $user, []);
 
         //récupération des données de formulaire
         $form->handleRequest($request);
 
-
-
         if ($form->isSubmitted() and $form->isValid()) {
-            if ($this->isValidRecaptcha($request->get('g-recaptcha-response'))) {
+            if (
+                $this->isValidRecaptcha($request->get('g-recaptcha-response'))
+            ) {
                 // Hashage du mot de passe
-                $hash = $this->encoder->encodePassword($user, $form['password']->getData());
-                $user->setEmail($form['email']->getData())
-                    ->setPassword($hash)
-                    ->setIsValid(false);
+                $hash = $this->encoder->encodePassword(
+                    $user,
+                    $form['password']->getData()
+                );
 
-                //on fait persister notre user
-                $this->manager->persist($user);
-                //on flush le tout en BDD
-                $this->manager->flush();
+                // recherche en base si le user (email) existe
+                $user_bdd = $this->repository->findOneBy([
+                    'email' => $form['email']->getData(),
+                ]);
 
-
-                if ($flag) {
+                // Si le user existe en base et qu'on essaye de le créer
+                if ($user_bdd !== null and $flag) {
                     $this->addFlash(
-                        'success',
-                        $this->translator->trans('flash.user.ajout')
+                        'danger',
+                        $this->translator->trans('flash.user.doublon')
                     );
+                    unset($user_bdd);
+
+                    return $this->redirectToRoute('user_create');
                 } else {
-                    $this->addFlash(
-                        'success',
-                        $this->translator->trans('flash.user.modif')
-                    );
-                }
+                    // si user pas en base et new user
+                    if (!$user_bdd and $flag) {
+                        //ajouter la date de création du token (tokenAt)
+                        $date = new \DateTime();
+                        $user->setTokenAt($date);
 
+                        //génération du token
+                        $token = $tokenGenerator->generateToken();
+                        $user->setToken($token);
+
+                        //is Valid false
+                        $user->setIsValid(false);
+
+                        $user
+                            ->setEmail($form['email']->getData())
+                            ->setPassword($hash);
+
+                        //on fait persister notre user
+                        $this->manager->persist($user);
+                        //on flush le tout en BDD
+                        $this->manager->flush();
+
+                        // modification de la route
+                        $url = $this->generateUrl(
+                            'check_token',
+                            ['id' => $user->getId(), 'token' => $token],
+                            UrlGeneratorInterface::ABSOLUTE_URL
+                        );
+
+                        $message = (new \Swift_Message(
+                            "Confirmation d'inscription"
+                        ))
+                            ->setFrom('contact@mail.com')
+                            ->setTo($form['email']->getData())
+                            ->setBody(
+                                'click here for confirm account: ' . $url,
+                                'text/html'
+                            );
+
+                        $mailer->send($message);
+
+                        $this->addFlash('notice', 'mail envoyé');
+
+                        // TODO route
+                        return $this->redirectToRoute('app_login');
+                    }
+
+                    //modif user
+                    $user
+                        ->setEmail($form['email']->getData())
+                        ->setPassword($hash);
+
+                    //on fait persister notre user
+                    $this->manager->persist($user);
+                    //on flush le tout en BDD
+                    $this->manager->flush();
+
+                    if ($flag) {
+                        $this->addFlash(
+                            'success',
+                            $this->translator->trans('flash.user.ajout')
+                        );
+                    } else {
+                        $this->addFlash(
+                            'success',
+                            $this->translator->trans('flash.user.modif')
+                        );
+                    }
+                }
                 return $this->redirectToRoute('users_listing');
             } else {
                 //are you a bot ?
-                $this->addFlash('danger', $this->translator->trans('flash.user.errReCaptcha'));
+                $this->addFlash(
+                    'danger',
+                    $this->translator->trans('flash.user.errReCaptcha')
+                );
             }
         }
 
-
-        return $this->render(
-            'user/create.html.twig',
-            ['user' => $user, 'form' => $form->createView()]
-        );
+        return $this->render('user/create.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
     }
-
-
-    /**
-     *  @Route("/users/reset/{id}", name="password_reset", requirements={"id"="\d+"})
-     */
-    // public function resetPassword(User $user): Response
-    // {
-    //     $user->setPassword('');
-    //     $this->manager->flush();
-    //     $this->addFlash('warning', $this->translator->trans('flash.user.modif'));
-    //     return $this->redirectToRoute('users_listing');
-    // }
 
 
     /**
@@ -166,6 +224,38 @@ class UserController extends AbstractController
         return $this->redirectToRoute('users_listing');
     }
 
+
+
+    /**
+    * @Route("users/check_token/{id}/{token}", name="check_token", requirements={"id"="\d+"})
+    *
+    * @param [type] $token
+    * @return void
+    */
+    public function checkToken(User $user, $token): Response
+    {
+        //comparer token et intervalle temps
+        $current_time = new \Datetime();
+        $expire_time = date_add(
+        $current_time,
+        date_interval_create_from_date_string(
+        self::TOKENMAXMINUTES . ' minutes'
+        ));
+        if (
+        $user->getToken() === $token and
+        $user->getTokenAt() <= $expire_time
+        ) {
+        $user
+        ->setToken(null)
+        ->setTokenAt(null)
+        ->setIsValid(true);
+        //on fait persister notre user
+        $this->manager->persist($user);
+        //on flush le tout en BDD
+        $this->manager->flush();
+        return $this->redirectToRoute('app_login');
+        }
+    }
 
     private function isValidRecaptcha($recaptcha)
     {

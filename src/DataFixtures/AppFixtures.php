@@ -17,84 +17,74 @@ class AppFixtures extends Fixture
      */
     private $encoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
-    {
+    public function __construct(UserPasswordEncoderInterface $encoder){
         $this->encoder = $encoder;
     }
 
     public function load(ObjectManager $manager)
     {
+        
+       //Création nouvel objet Faker
+        $faker=Factory::create('fr_FR');
 
-
-        // Création d'un nouvel objet Faker
-        $faker = Factory::create('fr_FR');
-
-        //Création de nos 5 catégories
-        for ($c = 0; $c < 5; $c++) {
-            //Création d'un nouvel objet Tag
-            $tag = new Tag;
-
-            // On ajout un nom à notre catégorie
-            // $tag->setName($faker->randomElement(['pro','loisirs','santé','bizarre','hasard']));
-            $tag->setName($faker->colorName());
-
-            // On fait persister les données
+        
+        for($i=0;$i<5;$i++){
+            //Création nouvel objet Tag
+            $tag=new Tag;
+            //On nourrit l'objet
+            //$tag->setName($faker->randomElement(['pro','loisirs','bizarre','santé','hasard']));
+            $tag->setName($faker->colorName())
+            ->setColor($faker->hexcolor());;
+            //On fait persister les données
             $manager->persist($tag);
         }
-
-        // On push les catégories en BDD
+        //Envoyer les données en BDD (ici on doit flush pour chaque table car elles ont un lien entre elles)
         $manager->flush();
 
-        //récupération des catégories crées
-        $allTags = $manager->getRepository(Tag::class)->findAll();
+        for($i=0;$i<mt_rand(15,30);$i++){
+            //Création objet Task
+            $task= new Task;
+            //On récupère tous le enregistrements de la table Tag
+            $allTags= $manager->getRepository(Tag::class)->findAll();
 
-        // Création entre 15 et 30 tâches aléatoirement
-        for ($t = 0; $t < mt_rand(15, 30); $t++) {
-
-            // Création d'un nouvel objet Task
-            $task = new Task;
-
-            // On nourrit l'objet Task
-            $startDate = $faker->dateTimeBetween('-2 days', '+ 2 days');
+            //On nourrit l'objet
+            $startDate=$faker->dateTimeBetween('-2 days ', '+2 days');
             $task->setName($faker->sentence(6))
-                ->setDescription($faker->paragraph(3))
-                ->setCreatedAt(new \DateTime()) // Attention les dates sont crées en fonction du réglage serveur
-                ->setDueAt($faker->dateTimeBetween($startDate, '+ 10 days')) // de même ici
-                ->setTag($faker->randomElement($allTags))
-                ->setStartAt($startDate);
+            ->setDescription($faker->paragraph(3))
+            ->setCreatedAt(new \Datetime()) //Dates créées en fonction du serveur
+            ->setDueAt($faker->dateTimeBetween($startDate, '+5 days'))
+            ->setTag($faker->randomElement($allTags))
+            ->setStartAt($startDate);
 
-            // On fait persister les données
+            //On fait persister les données
             $manager->persist($task);
+
         }
 
-        // Création de 5 utilisateurs
-        for ($u = 0; $u < 5; $u++) {
-
-            // Création d'un nouvel objet User
+        for($u = 0; $u < 5; $u++){
+            //Creation nouvel utilisateur
             $user = new User;
 
-            // Hashage de notre mot de passe avec les paramètres de sécurité de notre $user
-            // dans /config/packages/security.yaml
+            //Hashage password avec parametre de sécurité de $user
             $hash = $this->encoder->encodePassword($user, "password");
-
+            // On nourrit l'objet User
             // Si premier utilisateur crée on lui donne le rôle admin
             if ($u === 0) {
-                $user->setRoles(["ROLE_ADMIN"])
-                    ->setEmail('admin@admin.fr');
+                $user->setRoles(['ROLE_ADMIN'])->setEmail('admin@admin.fr')
+                    ->setIsValid(true);
+
             } else {
-                // On nourrit l'objet User
-                $user->setEmail($faker->safeEmail());
+                $user->setEmail($faker->safeEmail())->setIsValid(false);
             }
 
-            $user->setPassword($hash)
-                ->setIsValid(false);
-
+            $user->setPassword($hash);
 
             // On fait persister les données
             $manager->persist($user);
-        }
 
-        // On push le tout en BDD
+
+        }
+        //Envoyer les données en BDD
         $manager->flush();
     }
 }

@@ -6,36 +6,18 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
-
-    /**
-     * @var TranslatorInterface
-     */
-    private $translator;
-
-    /**
-     * @param TranslatorInterface $translator
-     */
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
-
     /**
      * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // Si l'utilisateur est déjà connecté, le rediriger vers la page de listing
+        //Si authentification correct, redirection vers listing
         if ($this->getUser()) {
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('general.success.update')
-            );
+            $this->addFlash('success','Vous êtes déjà connecté.');
 
             return $this->redirectToRoute('tasks_listing');
         }
@@ -53,5 +35,6 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
+       
     }
 }

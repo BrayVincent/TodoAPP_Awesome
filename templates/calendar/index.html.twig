@@ -1,13 +1,19 @@
 {% extends 'base.html.twig' %}
 
+
 {% block stylesheets %}
+
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+
 {% endblock %}
+
 {% block body %}
 
-	<div id="calendar-holder" class='col-6 mx-auto'></div>
+	<div id="calendar-holder" class='col-12 col-md-8 mx-auto'></div>
+
+
 	<div id="fullCalModal" class="modal fade" style="z-index: 9999">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -31,21 +37,28 @@
 				</div>
 			</div>
 		</div>
-	</div>
 
-{% endblock %}
-{% block javascripts %}
-	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+	{% endblock %}
 
-	<script type="text/javascript">
-		document.addEventListener('DOMContentLoaded', () => {
+	{% block javascripts %}
+
+
+		<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.1.0/main.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/locales-all.js"></script>
+
+
+		<script type="text/javascript">
+
+			document.addEventListener('DOMContentLoaded', () => {
 var calendarEl = document.getElementById('calendar-holder');
-
+var translate = '{% if app.request.getLocale() == "jp" %}{{ "ja" }}{% else %}{{ app.request.getLocale() }}{% endif %}';
 var calendar = new FullCalendar.Calendar(calendarEl, {
+selectable: true,
 defaultView: 'dayGridMonth',
+locale: translate,
 eventSources: [
 {
 url: "{{ path('fc_load_events') }}",
@@ -67,7 +80,7 @@ plugins: [
 ],
 
 // https://fullcalendar.io/docs/plugin-index
-timeZone: 'UTC',
+timeZone: 'local',
 
 // Evenement click sur les tâches
 eventClick: function (info) {
@@ -79,22 +92,62 @@ $('#ev_start').html('Date de début : ' + info.event.start);
 $('#ev_end').html('Date de fin : ' + info.event.end);
 $('#ev_desc').html('Description : ' + info.event.extendedProps.description);
 
+
 // bouton Modifier
 var btnUpdate = document.getElementById('btnUpdate');
-var actionUpdate = '<a href="' + info.event.extendedProps.update + '" class="btn btn-primary" > {{ 'calendar.update'  | trans }}</a>';
+var actionUpdate = '<a href="' + info.event.extendedProps.update + '" class="btn btn-primary" >                                                                                                                                                                             {{ 'calendar.update'  | trans }}</a>';
 btnUpdate.innerHTML = actionUpdate;
 // Bouton supprimer
 var btnDelete = document.getElementById('btnDelete');
-var actionDelete = '<a href="' + info.event.extendedProps.delete + '" class="btn btn-danger" > {{ 'calendar.delete'  | trans }}</a>';
+var actionDelete = '<a href="' + info.event.extendedProps.delete + '" class="btn btn-danger" >                                                                                                                                                                             {{ 'calendar.delete'  | trans }}</a>';
 btnDelete.innerHTML = actionDelete;
 
 $('#fullCalModal').modal('show');
 // change the border color just for fun
 info.el.style.borderColor = 'red';
+},
+// Dates clicables
+dateClick: function (info) {
+console.log(info);
+
+// let xhr = new XMLHttpRequest();
+// xhr.open("GET", '/tasks/listing', true);
+// xhr.setRequestHeader("Content-Type", "application/json");
+// var data = "";
+// xhr.onreadystatechange = function () {
+// if (xhr.readyState === 4) {
+
+// var data = JSON.stringify({date: info.dateStr});
+// }
+// }
+// xhr.send(data);
+},
+
+select: function (info) {
+// Essai d'affichage du contenu de l'objet Date dans une modale
+// console.log(info);
+// $('#modalTitle').html('Création');
+// $('#ev_start').html('Date de début : ' + info.start.getDate() + '/' + info.start.getMonth() + '/' + info.start.getFullYear());
+// $('#ev_end').html('Date de fin : ' + (
+// info.end.getDate() - 1
+// ) + '/' + info.end.getMonth() + '/' + info.end.getFullYear());
+// $('#fullCalModal').modal('show');
+
+// Envoie données via AJAX
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "{{ path('ajax') }}", true);
+xhr.setRequestHeader("Content-Type", "application/json");
+var dateDeb = info.start.getDate();
+var data = JSON.stringify({dateStr: dateDeb});
+
+xhr.send(data);
+// console.log(xhr);
+console.log(data);
+document.location.href = "ajax";
 }
 });
+
 calendar.render();
 });
-	</script>
-
-{% endblock %}
+		</script>
+	{% endblock %}
