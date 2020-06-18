@@ -7,7 +7,8 @@
 			{% endblock %}
 		</title>
 
-		<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/superhero/bootstrap.min.css" rel="stylesheet" integrity="sha384-rvwYMW9Z/bbxZfgxHQEKx6D91KwffWAG+XnsoYNCGWi/qL1P9dIVYm1HBiHFqQEt" crossorigin="anonymous"> {% block stylesheets %}{% endblock %}
+		<link
+		href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/simplex/bootstrap.min.css" rel="stylesheet" integrity="sha384-6ge4b1Lr1zrvyGvm5pdAkc3NMa97XYhFPBWsZsT6O3eOU+hqURR1bQEMm11Grf3a" crossorigin="anonymous">
 		{# Ajout de la feuille de style perso #}
 		<link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
 
@@ -35,17 +36,18 @@
 									</a>
 								</li>
 								<li class="nav-item {{ route in ['users_listing','user_create','update_user'] ? 'active' }}">
-							<a class="nav-link" href="{{ path('users_listing') }}">Users
-									<span class="sr-only">(current)</span>
-								</a></li>
+									<a class="nav-link" href="{{ path('users_listing') }}">Users
+										<span class="sr-only">(current)</span>
+									</a>
+								</li>
 							{% endif %}
 
 							<li class="nav-item {{route == 'calendar' ? 'active'}}">
 								<a class="nav-link" href="{{ path('calendar') }}">{{ 'calendar.menu' | trans }}
 									<span class="sr-only">(current)</span>
 								</a>
-							</li>				
-							
+							</li>
+
 						{% endif %}
 					</ul>
 					{# pour le menu de droite #}
