@@ -1,21 +1,18 @@
 {% extends "base.html.twig" %}
 
-
 {% block body %}
-
-	{{ form_start(form) }}
-	{{ form_row(form.email) }}
-	{{ form_row(form.password.first) }}
-	{{ form_row(form.password.second) }}
-	</br>
+<div class="col-6 mx-auto">
+    {{ form_start(form) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.password.first) }}
+    {{ form_row(form.password.second) }}
     <div class="g-recaptcha" data-sitekey="6Lf_VKMZAAAAABijF1l1G0MjV3-XZnuaO8CU8qAT">
-	</div>
-	</br>
-	{{ form_end(form) }}
-
+    </div>
+    {{ form_end(form) }}
+</div>
 {% endblock %}
 
 {% block javascripts %}
-	<script src="https://www.google.com/recaptcha/api.js"></script>
-
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    
 {% endblock %}

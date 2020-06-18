@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
+
 {% block body %}
-	{{ form_start(form) }}
-	{{ form_widget(form) }}
-	{{ form_end(form) }}
+	<div class="col-6 mx-auto mt-2">
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		{{ form_end(form) }}
+	</div>
 {% endblock %}
