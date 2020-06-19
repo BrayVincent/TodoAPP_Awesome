@@ -23,10 +23,10 @@
     "symfony/twig-pack": "^1.0",
     "symfony/validator": "5.1.*",
     "symfony/yaml": "5.1.*",
+    "doctrine/doctrine-fixtures-bundle": "^3.3",
     "tattali/calendar-bundle": "^1.2"
   },
   "require-dev": {
-    "doctrine/doctrine-fixtures-bundle": "^3.3",
     "symfony/maker-bundle": "^1.19",
     "symfony/profiler-pack": "^1.0",
     "symfony/var-dumper": "5.1.*"
@@ -69,7 +69,8 @@
       "@auto-scripts"
     ],
     "compile": [
-      "php bin/console doctrine:migrations:migrate"
+      "php bin/console doctrine:migrations:migrate",
+      "php bin/console doctrine:fixtures:load --no-interaction --env=PROD"
     ]
   },
   "conflict": {
