@@ -10,97 +10,99 @@
 		<link
 		href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/simplex/bootstrap.min.css" rel="stylesheet" integrity="sha384-6ge4b1Lr1zrvyGvm5pdAkc3NMa97XYhFPBWsZsT6O3eOU+hqURR1bQEMm11Grf3a" crossorigin="anonymous">
 		{# Ajout de la feuille de style perso #}
-		<link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
+		<link href="{{ asset('css/style.css') }}" rel="stylesheet"/> {% block stylesheets %}{% endblock %}
 
-	</head>
-	<body>
-		{% set route = app.request.attributes.get('_route') %}
-		<header>
-			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-				<a class="navbar-brand" href="{{ path('home') }}">Do it Now</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="navbarCollapse">
-					<ul class="navbar-nav mr-auto">
-						<li class="nav-item {{ route in ['tasks_listing','home','task_create','task_update'] ? 'active' }}">
 
-							<a class="nav-link" href="{{ path('home') }}">{{ 'nav.accueil'|trans}}
-								<span class="sr-only">(current)</span>
-							</a>
-						</li>
-						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-							{% if is_granted('ROLE_ADMIN') %}
-								<li class="nav-item {{ route in ['tags_listing','tag_create','tag_update'] ? 'active' }}">
-									<a class="nav-link" href="{{ path('tags_listing') }}">{{ 'general.title.index.tag' | trans }}
-									</a>
-								</li>
-								<li class="nav-item {{ route in ['users_listing','user_create','update_user'] ? 'active' }}">
-									<a class="nav-link" href="{{ path('users_listing') }}">Users
-										<span class="sr-only">(current)</span>
-									</a>
-								</li>
-							{% endif %}
+		</head>
+		<body>
+			{% set route = app.request.attributes.get('_route') %}
+			<header>
+				<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+					<a class="navbar-brand" href="{{ path('home') }}">Do it Now</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav mr-auto">
+							<li class="nav-item {{ route in ['tasks_listing','home','task_create','task_update'] ? 'active' }}">
 
-							<li class="nav-item {{route == 'calendar' ? 'active'}}">
-								<a class="nav-link" href="{{ path('calendar') }}">{{ 'calendar.menu' | trans }}
+								<a class="nav-link" href="{{ path('home') }}">{{ 'nav.accueil'|trans}}
 									<span class="sr-only">(current)</span>
 								</a>
 							</li>
-
-						{% endif %}
-					</ul>
-					{# pour le menu de droite #}
-					<ul
-						class="navbar-nav ml-auto">
-						{# Si on est connecté #}
-						{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-							{# on affiche #}
-							<li class="nav-item text-light d-flex align-items-center">
-								Connecté en tant que :
-								{{ app.user.email }}
-							</li>
-							<li class="nav-item ml-3">
-								<a class="nav-link" href="{{ path('app_logout') }}">Log Out</a>
-							</li>
-							{# Sinon #}
-						{% else %}
-							{# On affiche #}
-							<li class="nav-item {{ route == 'app_login' ? 'active' }}">
-								<a class="nav-link" href="{{ path('app_login') }}">Log In</a>
-							</li>
-						{% endif %}
-					</ul>
-					{# Boutons de langue #}
-					{% set route = app.request.attributes.get('_route') %}
-					{% set route_params = app.request.attributes.get('_route_params') %}
-					{% set params = route_params|merge(app.request.query.all) %}
-
-					{% set lang = locales|split('|') %}
-					{% for locale in lang %}
-
-						<span class="nav-item">
-							<a href="{{ path(route, params|merge({ _locale: locale })) }}">
-								{% if app.request.locale == locale %}
-									<img id="langue-active" src="{{ asset('img/'~ locale ~'-locale.png') }}" alt="{{ locale }}"/>
-								{% else %}
-									<img id="langue" src="{{ asset('img/'~ locale ~'-locale.png') }}" alt="{{ locale }}"/>
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								{% if is_granted('ROLE_ADMIN') %}
+									<li class="nav-item {{ route in ['tags_listing','tag_create','tag_update'] ? 'active' }}">
+										<a class="nav-link" href="{{ path('tags_listing') }}">{{ 'general.title.index.tag' | trans }}
+										</a>
+									</li>
+									<li class="nav-item {{ route in ['users_listing','user_create','update_user'] ? 'active' }}">
+										<a class="nav-link" href="{{ path('users_listing') }}">Users
+											<span class="sr-only">(current)</span>
+										</a>
+									</li>
 								{% endif %}
-							</a>
-						</span>
 
-					{% endfor %}
-				</div>
-			</nav>
-		</header>
+								<li class="nav-item {{route == 'calendar' ? 'active'}}">
+									<a class="nav-link" href="{{ path('calendar') }}">{{ 'calendar.menu' | trans }}
+										<span class="sr-only">(current)</span>
+									</a>
+								</li>
 
-		{% include '/utils/flash.html.twig' %}
+							{% endif %}
+						</ul>
+						{# pour le menu de droite #}
+						<ul
+							class="navbar-nav ml-auto">
+							{# Si on est connecté #}
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								{# on affiche #}
+								<li class="nav-item text-light d-flex align-items-center">
+									Connecté en tant que :
+									{{ app.user.email }}
+								</li>
+								<li class="nav-item ml-3">
+									<a class="nav-link" href="{{ path('app_logout') }}">Log Out</a>
+								</li>
+								{# Sinon #}
+							{% else %}
+								{# On affiche #}
+								<li class="nav-item {{ route == 'app_login' ? 'active' }}">
+									<a class="nav-link" href="{{ path('app_login') }}">Log In</a>
+								</li>
+							{% endif %}
+						</ul>
+						{# Boutons de langue #}
+						{% set route = app.request.attributes.get('_route') %}
+						{% set route_params = app.request.attributes.get('_route_params') %}
+						{% set params = route_params|merge(app.request.query.all) %}
 
-		{% block body %}{% endblock %}
+						{% set lang = locales|split('|') %}
+						{% for locale in lang %}
 
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-		{% block javascripts %}{% endblock %}
-	</body>
-</html></body></html></body></html>
+							<span class="nav-item">
+								<a href="{{ path(route, params|merge({ _locale: locale })) }}">
+									{% if app.request.locale == locale %}
+										<img id="langue-active" src="{{ asset('img/'~ locale ~'-locale.png') }}" alt="{{ locale }}"/>
+									{% else %}
+										<img id="langue" src="{{ asset('img/'~ locale ~'-locale.png') }}" alt="{{ locale }}"/>
+									{% endif %}
+								</a>
+							</span>
+
+						{% endfor %}
+					</div>
+				</nav>
+			</header>
+
+			{% include '/utils/flash.html.twig' %}
+
+			{% block body %}{% endblock %}
+
+			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+			{% block javascripts %}{% endblock %}
+		</body>
+	</html>
+</body></html></body></html>
